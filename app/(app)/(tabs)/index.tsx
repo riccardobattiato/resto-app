@@ -1,11 +1,33 @@
-import { Image, StyleSheet, Platform } from 'react-native';
+import { supabase } from '@/utils/supabase'
+import { Image, StyleSheet, Platform, View, Text, TouchableOpacity } from 'react-native';
 
 import { HelloWave } from '@/components/HelloWave';
 import ParallaxScrollView from '@/components/ParallaxScrollView';
 import { ThemedText } from '@/components/ThemedText';
 import { ThemedView } from '@/components/ThemedView';
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from '~/components/ui/card';
+import UserCard from '@/components/userCard';
+import { Link } from 'expo-router';
+import { useSession } from '@/context';
+
+async function getUsers() {
+  const { data, error, status } = await supabase
+    .from('profiles')
+    .select(`*`)
+  console.log(data, error, status)
+}
 
 export default function HomeScreen() {
+  const { signOut } = useSession();
+  getUsers();
+
   return (
     <ParallaxScrollView
       headerBackgroundColor={{ light: '#A1CEDC', dark: '#1D3D47' }}
@@ -46,6 +68,43 @@ export default function HomeScreen() {
           <ThemedText type="defaultSemiBold">app-example</ThemedText>.
         </ThemedText>
       </ThemedView>
+      <UserCard
+        avatar="https://www.github.com/a0m0rajab.png"
+        name="a0m0rajab"
+        role="Software Engineer"
+        id="1"
+      />
+      <UserCard
+        avatar="https://www.github.com/a0m0rajab.png"
+        name="a0m0rajab"
+        role="Software Engineer"
+        id="2"
+      />
+      <View >
+        <Link href="profile" asChild>
+          <TouchableOpacity>
+            <Card className='w-full max-w-sm'>
+              <CardHeader>
+                <CardTitle>This is an example Card</CardTitle>
+                <CardDescription>Click on me to go to profile page</CardDescription>
+              </CardHeader>
+              <CardContent>
+                <Text>Card Content</Text>
+              </CardContent>
+              <CardFooter>
+                <Text>Card Footer</Text>
+              </CardFooter>
+            </Card>
+          </TouchableOpacity>
+        </Link>
+      </View>
+      <Text
+        onPress={() => {
+          // The `app/(app)/_layout.tsx` will redirect to the sign-in screen.
+          signOut();
+        }}>
+        Sign Out
+      </Text>
     </ParallaxScrollView>
   );
 }
