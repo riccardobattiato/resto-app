@@ -4,10 +4,11 @@ import AntDesign from "@expo/vector-icons/AntDesign";
 import { View, StyleSheet } from "react-native";
 import { Button } from "~/components/ui/button";
 import { Text } from "~/components/ui/text";
+import { useLanguage } from "~/hooks/useLanguage";
 
 export default function Tab() {
   const { colorScheme } = useColorScheme();
-
+  const [t] = useLanguage();
   return (
     <View style={styles.container}>
       <Button variant="outline" size="lg" className="flex-row items-center">
@@ -17,7 +18,7 @@ export default function Tab() {
           color={Colors[colorScheme ?? "light"].primary}
           className="mr-2"
         />
-        <Text>Start a new group</Text>
+        <Text>{t("groups.empty")}</Text>
       </Button>
     </View>
   );

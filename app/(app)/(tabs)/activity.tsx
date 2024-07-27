@@ -1,12 +1,12 @@
+import { useLanguage } from "~/hooks/useLanguage";
 import { View, StyleSheet } from "react-native";
 import { Text } from "~/components/ui/text";
 
 export default function Tab() {
+  const [t] = useLanguage();
   return (
     <View style={styles.container}>
-      <Text className="text-center">
-        There is no activity in your account yet.{"\n"}Try adding an expense!
-      </Text>
+      <Text className="text-center">{t("activity.empty")}</Text>
     </View>
   );
 }

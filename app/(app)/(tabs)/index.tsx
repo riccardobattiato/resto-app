@@ -4,8 +4,10 @@ import { useColorScheme } from "~/lib/useColorScheme";
 import AntDesign from "@expo/vector-icons/AntDesign";
 import { Button } from "~/components/ui/button";
 import { Text } from "~/components/ui/text";
+import { useLanguage } from "~/hooks/useLanguage";
 export default function Tab() {
   const { colorScheme } = useColorScheme();
+  const [t] = useLanguage();
 
   return (
     <View style={styles.container}>
@@ -16,7 +18,7 @@ export default function Tab() {
           color={Colors[colorScheme ?? "light"].primary}
           className="mr-2"
         />
-        <Text>Add more friends</Text>
+        <Text>{t("friends.empty")}</Text>
       </Button>
     </View>
   );
