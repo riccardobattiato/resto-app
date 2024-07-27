@@ -1,9 +1,12 @@
-import { View, Text, StyleSheet } from "react-native";
+import { View, StyleSheet } from "react-native";
+import { Text } from "~/components/ui/text";
 
 export default function Tab() {
   return (
     <View style={styles.container}>
-      <Text>Activity</Text>
+      <Text className="text-center">
+        There is no activity in your account yet.{"\n"}Try adding an expense!
+      </Text>
     </View>
   );
 }

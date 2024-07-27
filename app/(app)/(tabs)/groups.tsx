@@ -1,17 +1,23 @@
-import { View, Text, StyleSheet } from "react-native";
+import { Colors } from "~/constants/Colors";
+import { useColorScheme } from "~/lib/useColorScheme";
+import AntDesign from "@expo/vector-icons/AntDesign";
+import { View, StyleSheet } from "react-native";
 import { Button } from "~/components/ui/button";
+import { Text } from "~/components/ui/text";
 
 export default function Tab() {
+  const { colorScheme } = useColorScheme();
+
   return (
     <View style={styles.container}>
-      <Button
-        variant="outline"
-        className="shadow shadow-foreground/5"
-        onPress={() => {
-          console.log("Hi");
-        }}
-      >
-        <Text className="text-blue-700">Start a new group</Text>
+      <Button variant="outline" size="lg" className="flex-row items-center">
+        <AntDesign
+          name="addusergroup"
+          size={18}
+          color={Colors[colorScheme ?? "light"].primary}
+          className="mr-2"
+        />
+        <Text>Start a new group</Text>
       </Button>
     </View>
   );
