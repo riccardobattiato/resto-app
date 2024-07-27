@@ -20,7 +20,7 @@ export type DeepKeys<T, S extends string> =
 export type LanguagesType = keyof typeof languages;
 export type LocalizationKeys = keyof typeof it;
 export type CallbackTranslation = <S extends string>(
-  scope: DeepKeys<typeof it, S>,
+  scope: DeepKeys<typeof en, S>,
   options?: Record<string, unknown>,
 ) => string;
 export type CallbackSetTranslation = (language: LanguagesType) => void;
