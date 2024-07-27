@@ -1,27 +1,27 @@
 # Welcome to react native starter kit 👋
 
-This project is using 
+This project is using
+
 - [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app)
 - [React native Reusables](https://github.com/mrzachnugent/react-native-reusables) as UI library using [nativewind](https://www.nativewind.dev/)
 - [https://supabase.com/](https://supabase.com/) for the database an auth
 
 ## screens
 
-the app contains the next screens: 
-- sign up/log in screen 
-- profile editing screen 
-- cards screen 
-- user profile screen 
+the app contains the next screens:
+
+- sign up/log in screen
+- profile editing screen
+- cards screen
+- user profile screen
 
 which all uses expo router and have the minimum running example to start on top of it.
 
-## Setting up: 
+## Setting up:
 
-You need to have a supabase database and update the `.env` with the related links to get the project up. 
+You need to have a supabase database and update the `.env` with the related links to get the project up.
 
-As for the database you can start with [supabase template](https://supabase.com/docs/guides/getting-started/tutorials/with-expo-react-native#set-up-the-database-schema), user management script, and run it to work with that. 
-
-
+As for the database you can start with [supabase template](https://supabase.com/docs/guides/getting-started/tutorials/with-expo-react-native#set-up-the-database-schema), user management script, and run it to work with that.
 
 ## Get started
 

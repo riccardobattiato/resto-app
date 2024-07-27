@@ -1,62 +1,61 @@
-import { useState, useEffect } from 'react'
-import { supabase } from '@/utils/supabase'
-import { StyleSheet, View, Alert, Button } from 'react-native'
-import { Session } from '@supabase/supabase-js'
-import { Input } from './ui/input'
-import { Text } from './ui/text'
-import AvatarUploader from './AvatarUploader'
-import { useSession } from '@/context'
+import { useState, useEffect } from "react";
+import { supabase } from "@/utils/supabase";
+import { StyleSheet, View, Alert, Button } from "react-native";
+import { Session } from "@supabase/supabase-js";
+import { Input } from "./ui/input";
+import { Text } from "./ui/text";
+import AvatarUploader from "./AvatarUploader";
+import { useSession } from "@/context";
 
 export default function Account() {
-  const [session, setSession] = useState<Session | null>(null)
+  const [session, setSession] = useState<Session | null>(null);
   const { signOut } = useSession();
 
   useEffect(() => {
     supabase.auth.getSession().then(({ data: { session } }) => {
-      setSession(session)
-    })
+      setSession(session);
+    });
 
     supabase.auth.onAuthStateChange((_event, session) => {
-      setSession(session)
-    })
-  }, [])
-  const [loading, setLoading] = useState(true)
-  const [username, setUsername] = useState('')
-  const [website, setWebsite] = useState('')
-  const [avatarUrl, setAvatarUrl] = useState('')
-  const [fullName, setfullName] = useState('')
-
+      setSession(session);
+    });
+  }, []);
+  const [loading, setLoading] = useState(true);
+  const [username, setUsername] = useState("");
+  const [website, setWebsite] = useState("");
+  const [avatarUrl, setAvatarUrl] = useState("");
+  const [fullName, setfullName] = useState("");
 
   useEffect(() => {
-    if (session) getProfile()
-  }, [session])
+    if (session) getProfile();
+  }, [session]);
 
   async function getProfile() {
     try {
-      setLoading(true)
-      if (!session?.user) throw new Error('No user on the session!')
+      setLoading(true);
+      if (!session?.user) throw new Error("No user on the session!");
 
       const { data, error, status } = await supabase
-        .from('profiles')
+        .from("profiles")
         .select(`username, website, avatar_url, full_name`)
-        .eq('id', session?.user.id)
-        .single()
+        .eq("id", session?.user.id)
+        .single();
       if (error && status !== 406) {
-        throw error
+        throw error;
       }
 
       if (data) {
-        setUsername(data.username)
-        setWebsite(data.website)
-        setAvatarUrl(data.avatar_url)
-        setfullName(data.full_name)
+        setUsername(data.username);
+        setWebsite(data.website);
+        setAvatarUrl(data.avatar_url);
+        setfullName(data.full_name);
       }
     } catch (error) {
       if (error instanceof Error) {
-        Alert.alert(error.message)
+        Alert.alert(error.message);
       }
     } finally {
-      setLoading(false)
+      setLoading(false);
     }
   }
 
@@ -64,16 +63,16 @@ export default function Account() {
     username,
     website,
     avatar_url,
-    fullName
+    fullName,
   }: {
-    username: string
-    website: string
-    avatar_url: string,
-    fullName: string
+    username: string;
+    website: string;
+    avatar_url: string;
+    fullName: string;
   }) {
     try {
-      setLoading(true)
-      if (!session?.user) throw new Error('No user on the session!')
+      setLoading(true);
+      if (!session?.user) throw new Error("No user on the session!");
 
       const updates = {
         id: session?.user.id,
@@ -81,53 +80,80 @@ export default function Account() {
         website,
         avatar_url,
         updated_at: new Date(),
-        full_name: fullName
-      }
+        full_name: fullName,
+      };
 
-      const { error } = await supabase.from('profiles').upsert(updates)
+      const { error } = await supabase.from("profiles").upsert(updates);
 
       if (error) {
-        throw error
+        throw error;
       }
     } catch (error) {
       if (error instanceof Error) {
-        Alert.alert(error.message)
+        Alert.alert(error.message);
       }
     } finally {
-      setLoading(false)
+      setLoading(false);
     }
   }
 
   return (
-    <View style={styles.container} className='justify-center align-items-middle'>
+    <View
+      style={styles.container}
+      className="justify-center align-items-middle"
+    >
       <AvatarUploader
         size={200}
         url={avatarUrl}
         onUpload={(url: string) => {
-          setAvatarUrl(url)
-          updateProfile({ username, website, avatar_url: url, fullName })
-        }}/>
+          setAvatarUrl(url);
+          updateProfile({ username, website, avatar_url: url, fullName });
+        }}
+      />
       <View style={[styles.verticallySpaced, styles.mt20]}>
         <Text>Email</Text>
-        <Input placeholder="Email" value={session?.user?.email} editable={false} />
+        <Input
+          placeholder="Email"
+          value={session?.user?.email}
+          editable={false}
+        />
       </View>
       <View style={styles.verticallySpaced}>
         <Text>Full Name</Text>
-        <Input placeholder="Full name" value={fullName || ''} onChangeText={(text) => setfullName(text)} />
+        <Input
+          placeholder="Full name"
+          value={fullName || ""}
+          onChangeText={(text) => setfullName(text)}
+        />
       </View>
       <View style={styles.verticallySpaced}>
         <Text>Username</Text>
-        <Input placeholder="Username" value={username || ''} onChangeText={(text) => setUsername(text)} />
+        <Input
+          placeholder="Username"
+          value={username || ""}
+          onChangeText={(text) => setUsername(text)}
+        />
       </View>
       <View style={styles.verticallySpaced}>
         <Text>Website</Text>
-        <Input placeholder="Website" value={website || ''} onChangeText={(text) => setWebsite(text)} />
+        <Input
+          placeholder="Website"
+          value={website || ""}
+          onChangeText={(text) => setWebsite(text)}
+        />
       </View>
 
       <View style={[styles.verticallySpaced, styles.mt20]}>
         <Button
-          title={loading ? 'Loading ...' : 'Update'}
-          onPress={() => updateProfile({ username, website, avatar_url: avatarUrl, fullName })}
+          title={loading ? "Loading ..." : "Update"}
+          onPress={() =>
+            updateProfile({
+              username,
+              website,
+              avatar_url: avatarUrl,
+              fullName,
+            })
+          }
           disabled={loading}
         />
       </View>
@@ -136,7 +162,7 @@ export default function Account() {
         <Button title="Sign Out" onPress={() => signOut()} />
       </View>
     </View>
-  )
+  );
 }
 
 const styles = StyleSheet.create({
@@ -147,9 +173,9 @@ const styles = StyleSheet.create({
   verticallySpaced: {
     paddingTop: 4,
     paddingBottom: 4,
-    alignSelf: 'stretch',
+    alignSelf: "stretch",
   },
   mt20: {
     marginTop: 20,
   },
-})
+});

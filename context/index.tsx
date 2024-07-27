@@ -1,9 +1,9 @@
-import React from 'react';
-import { useStorageState } from './useStorageState';
-import { supabase } from '@/utils/supabase';
+import React from "react";
+import { useStorageState } from "./useStorageState";
+import { supabase } from "@/utils/supabase";
 
 const AuthContext = React.createContext<{
-  signIn: (email:string,password:string) => void | any;
+  signIn: (email: string, password: string) => void | any;
   signOut: () => void;
   session?: string | null;
   isLoading: boolean;
@@ -17,9 +17,9 @@ const AuthContext = React.createContext<{
 // This hook can be used to access the user info.
 export function useSession() {
   const value = React.useContext(AuthContext);
-  if (process.env.NODE_ENV !== 'production') {
+  if (process.env.NODE_ENV !== "production") {
     if (!value) {
-      throw new Error('useSession must be wrapped in a <SessionProvider />');
+      throw new Error("useSession must be wrapped in a <SessionProvider />");
     }
   }
 
@@ -27,9 +27,8 @@ export function useSession() {
 }
 
 export function SessionProvider(props: React.PropsWithChildren) {
-  const [[isLoading, session], setSession] = useStorageState('session');
-  const [[isUserLoading, user], setUser] = useStorageState('user');
-
+  const [[isLoading, session], setSession] = useStorageState("session");
+  const [[isUserLoading, user], setUser] = useStorageState("user");
 
   return (
     <AuthContext.Provider
@@ -38,12 +37,12 @@ export function SessionProvider(props: React.PropsWithChildren) {
           const { error, data } = await supabase.auth.signInWithPassword({
             email,
             password,
-          })
+          });
           if (error) {
-            console.log(error)
+            console.log(error);
             return {
               error,
-            }
+            };
           }
           // Perform sign-in logic here
           setSession(JSON.stringify(data?.session));
@@ -56,7 +55,8 @@ export function SessionProvider(props: React.PropsWithChildren) {
         },
         session,
         isLoading,
-      }}>
+      }}
+    >
       {props.children}
     </AuthContext.Provider>
   );
