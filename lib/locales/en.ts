@@ -6,10 +6,18 @@ export default {
     account: "Account",
   },
   groups: {
-    empty: "Start a new group",
+    empty: {
+      paragraph:
+        "You can use groups to track and split expenses with your friends",
+      button: "Start a new group",
+    },
   },
   friends: {
-    empty: "Add more friends",
+    empty: {
+      paragraph:
+        "Here you'll find your friends and members of the groups you're invited to",
+      button: "Add more friends",
+    },
   },
   activity: {
     empty: "There is no activity in your account yet.\nTry adding an expense!",

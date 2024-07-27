@@ -6,10 +6,17 @@ export default {
     account: "Account",
   },
   groups: {
-    empty: "Crea un nuovo gruppo",
+    empty: {
+      paragraph:
+        "I gruppi ti consentono di tracciare e dividere le spese con i tuoi amici",
+      button: "Crea un nuovo gruppo",
+    },
   },
   friends: {
-    empty: "Aggiungi amici",
+    empty: {
+      paragraph: "Qui troverai amici e membri dei gruppi in cui partecipi",
+      button: "Aggiungi amici",
+    },
   },
   activity: {
     empty:
