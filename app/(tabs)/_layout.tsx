@@ -1,25 +1,35 @@
 import FontAwesome from "@expo/vector-icons/FontAwesome";
 import { Tabs } from "expo-router";
+import { Colors } from "@/constants/Colors";
+import { useColorScheme } from "@/lib/useColorScheme";
+
+function TabBarIcon(props: {
+  name: React.ComponentProps<typeof FontAwesome>["name"];
+  color: string;
+}) {
+  return <FontAwesome size={20} style={{ marginBottom: -3 }} {...props} />;
+}
 
 export default function TabLayout() {
+  const { colorScheme } = useColorScheme();
   return (
-    <Tabs screenOptions={{ tabBarActiveTintColor: "blue" }}>
+    <Tabs
+      screenOptions={{
+        tabBarActiveTintColor: Colors[colorScheme ?? "light"].tint,
+      }}
+    >
       <Tabs.Screen
         name="groups"
         options={{
           title: "Groups",
-          tabBarIcon: ({ color }) => (
-            <FontAwesome size={28} name="group" color={color} />
-          ),
+          tabBarIcon: ({ color }) => <TabBarIcon name="group" color={color} />,
         }}
       />
       <Tabs.Screen
         name="index"
         options={{
           title: "Friends",
-          tabBarIcon: ({ color }) => (
-            <FontAwesome size={28} name="user" color={color} />
-          ),
+          tabBarIcon: ({ color }) => <TabBarIcon name="user" color={color} />,
         }}
       />
       <Tabs.Screen
@@ -27,7 +37,7 @@ export default function TabLayout() {
         options={{
           title: "Activity",
           tabBarIcon: ({ color }) => (
-            <FontAwesome size={28} name="line-chart" color={color} />
+            <TabBarIcon name="line-chart" color={color} />
           ),
         }}
       />
@@ -35,9 +45,7 @@ export default function TabLayout() {
         name="account"
         options={{
           title: "Account",
-          tabBarIcon: ({ color }) => (
-            <FontAwesome size={28} name="cog" color={color} />
-          ),
+          tabBarIcon: ({ color }) => <TabBarIcon name="cog" color={color} />,
         }}
       />
     </Tabs>
